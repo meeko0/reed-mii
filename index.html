@@ -1,40 +1,50 @@
-<title>Monster Mash Ave</title>
-<style>
-  :root { color-scheme: dark; }
-  body { margin: 0; background: #0b0714; }
-  .scene { position: relative; height: 100vh; overflow: hidden; background: linear-gradient(#120a24, #3a1552 60%, #c2481c); }
-  .scene > * { position: absolute; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monster Mash Ave</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="haunted-harvest.css">
+</head>
+<body>
+  <main class="scene">
+    <h1 class="title">Monster Mash Ave</h1>
 
-  .moon { top: 8%; right: 15%; width: 90px; height: 90px; border-radius: 50%; background: #f3dca8; box-shadow: 0 0 60px #ffd98a; }
-  .city { bottom: 20%; left: 0; right: 0; height: 45%; background: #1b1228;
-          clip-path: polygon(0 30%, 15% 30%, 15% 5%, 30% 5%, 30% 40%, 45% 40%, 45% 15%, 60% 15%, 60% 35%, 75% 35%, 75% 0, 90% 0, 90% 25%, 100% 25%, 100% 100%, 0 100%); }
-  .shop { bottom: 20%; left: 40%; font: 20px Impact, sans-serif; color: #ff7a1a; text-shadow: 0 0 10px #ff7a1a; animation: flicker 3s infinite; }
-  .road { bottom: 0; left: 0; right: 0; height: 20%; background: #120d18; }
+    <div class="art" aria-hidden="true">
+      <div class="moon"></div>
+      <div class="city"></div>
 
-  .queue { bottom: 21%; left: 55%; font-size: 36px; }
-  .queue span { display: inline-block; animation: bob 1s infinite alternate; }
-  .queue span:nth-child(2) { animation-delay: .3s; }
+      <!-- Costume shop, queue of customers, waving neighbour -->
+      <div class="shop"><span class="sign">COSTUMES 🎃</span><span class="door"></span></div>
+      <div class="queue"><span>🧟</span><span>🧛</span><span>🧙‍♀️</span></div>
+      <div class="window">🧟‍♀️<b class="wave">👋</b></div>
 
-  .bat  { top: 15%; font-size: 30px; animation: fly 8s linear infinite; }
-  .ghost { top: 30%; font-size: 40px; animation: fly 12s linear infinite reverse; opacity: .8; }
-  .car  { bottom: 5%; font-size: 60px; animation: drive 6s linear infinite; }
-  .car span { display: inline-block; transform: scaleX(-1); }
-  .fog { bottom: 10%; left: -50%; width: 200%; height: 20%; background: radial-gradient(#ffffff22, transparent 70%); animation: fly 20s linear infinite alternate; }
+      <div class="road"></div>
 
-  @keyframes fly     { from { left: -10%; } to { left: 110%; } }
-  @keyframes drive   { from { left: -15%; } to { left: 110%; } }
-  @keyframes bob     { to { transform: translateY(-6px); } }
-  @keyframes flicker { 50% { opacity: .4; } 52% { opacity: 1; } }
-</style>
+      <!-- Streetlights with eerie flicker -->
+      <div class="lamp lamp-1"></div>
+      <div class="lamp lamp-2"></div>
+      <div class="lamp lamp-3"></div>
 
-<div class="scene">
-  <div class="moon"></div>
-  <div class="city"></div>
-  <div class="shop">COSTUMES 🎃</div>
-  <div class="road"></div>
-  <div class="queue"><span>🧟</span><span>🧛</span></div>
-  <div class="bat">🦇</div>
-  <div class="ghost">👻</div>
-  <div class="fog"></div>
-  <div class="car"><span>🚗</span></div>
-</div>
+      <!-- Bats above the buildings -->
+      <div class="bat bat-1"><i>🦇</i></div>
+      <div class="bat bat-2 rtl"><i>🦇</i></div>
+      <div class="bat bat-3"><i>🦇</i></div>
+
+      <!-- Ghosts swooping between rooftops -->
+      <div class="ghost ghost-1">👻</div>
+      <div class="ghost ghost-2">👻</div>
+
+      <!-- Cars driving by -->
+      <div class="car car-1"><i>🚗</i></div>
+      <div class="car car-2 rtl"><i>🚕</i></div>
+
+      <div class="fog"></div>
+      <div class="confetti"></div>
+    </div>
+  </main>
+</body>
+</html>

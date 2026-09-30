@@ -1,5 +1,8 @@
 /* ==========================================================
-   The Haunted Harvest: Monsters' City Street (CSS only)
+   The Haunted Harvest: Monster Mash Ave (CSS only)
+   1 Variables · 2 Base · 3 Scene · 4 Shop & queue · 5 Window
+   6 Sky (bats, ghosts, fog, confetti) · 7 Street (lamps, cars)
+   8 Keyframes · 9 Reduced motion
    ========================================================== */
 
 /* 1. Variables */
@@ -10,113 +13,129 @@
     --slime-green: #8ac926;
     --ghost-white: #f6f2f8;
     --candle-glow: #ffd60a;
-    --gap: clamp(.75rem, 3vw, 1.5rem);
     --display: "Creepster", "Nosifer", cursive;
     --body: "Poppins", "Segoe UI", system-ui, sans-serif;
-}
-
-/* 2. Base */
-body {
-    margin: 0;
-    min-height: 100vh;
-    overflow-x: hidden;
-    background: radial-gradient(circle at 50% -10%, var(--candy-purple), var(--spider-black) 60%) fixed;
-    color: var(--ghost-white);
-    font: 1rem/1.6 var(--body);
-}
-
-/* Bats flying above buildings */
-.bat {
-    position: absolute;
-    top: 10%; /* Adjust height above buildings */
-    left: var(--x, 0);
-    font-size: clamp(1rem, 3vw, 2rem); /* Adjust size */
-    animation: ltr var(--d, 12s) linear var(--del, 0s) infinite;
-}
-.bat::before {
-    content: "🦇"; /* Bat emoji */
-}
-
-/* Ghosts swooping between rooftops */
-.ghost {
-    position: absolute;
-    top: 20%; /* Adjust height */
-    left: var(--x, 0);
-    font-size: clamp(1.5rem, 4vw, 3rem); /* Adjust size */
-    animation: swoop var(--d, 16s) linear var(--del, 0s) infinite;
-}
-.ghost::before {
-    content: "👻"; /* Ghost emoji */
-}
-
-/* Confetti falling */
-.confetti {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    opacity: .8;
+  }
+  
+  /* 2. Base */
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; overflow-x: hidden; background: #0b0714; color: var(--ghost-white); font: 1rem/1.6 var(--body); }
+  :focus-visible { outline: 3px solid var(--candle-glow); outline-offset: 3px; }
+  
+  /* 3. Scene */
+  .scene {
+    position: relative; height: 100vh; height: 100svh; min-height: 480px; overflow: hidden;
+    background: linear-gradient(#120a24, #3a1552 60%, #c2481c);
+  }
+  .art { position: absolute; inset: 0; }
+  .art > * { position: absolute; }
+  .title {
+    position: absolute; z-index: 5; top: 2%; left: 4%; margin: 0;
+    font: clamp(1.8rem, 6vw, 3.5rem)/1 var(--display); letter-spacing: .04em;
+    color: var(--pumpkin); text-shadow: 0 0 14px var(--pumpkin), 3px 3px 0 var(--candy-purple);
+  }
+  .moon {
+    top: 8%; right: 15%; width: clamp(60px, 9vw, 110px); aspect-ratio: 1; border-radius: 50%;
+    background: #f3dca8; box-shadow: 0 0 60px #ffd98a;
+  }
+  .city {
+    bottom: 20%; left: 0; right: 0; height: 45%; background: #1b1228;
+    clip-path: polygon(0 30%, 15% 30%, 15% 5%, 30% 5%, 30% 40%, 45% 40%, 45% 15%, 60% 15%, 60% 35%, 75% 35%, 75% 0, 90% 0, 90% 25%, 100% 25%, 100% 100%, 0 100%);
+  }
+  .city::before { /* flickering windows */
+    content: ""; position: absolute; inset: 10% 3% 4%; opacity: .5;
+    background: linear-gradient(var(--candle-glow), var(--candle-glow)) 0 0 / 14px 20px space;
+    animation: lit 5s steps(1) infinite;
+  }
+  .road { bottom: 0; left: 0; right: 0; height: 20%; background: linear-gradient(#3b3148 0 25%, #120d18 25%); }
+  
+  /* 4. Costume shop & queue of customers */
+  .shop {
+    left: 42%; bottom: 20%; width: clamp(120px, 20vw, 260px); height: clamp(90px, 24vh, 200px);
+    background: linear-gradient(#3a1760, #241038); border: 2px solid var(--pumpkin); border-bottom: 0;
+  }
+  .sign {
+    position: absolute; top: 8%; left: 0; right: 0; text-align: center; animation: flicker 3s infinite;
+    font: clamp(.9rem, 2.4vw, 1.8rem) var(--display); letter-spacing: .05em; color: var(--pumpkin); text-shadow: 0 0 10px var(--pumpkin);
+  }
+  .door {
+    position: absolute; left: 35%; bottom: 0; width: 30%; height: 45%; transform-origin: left;
+    background: var(--candle-glow); border-radius: .4rem .4rem 0 0; box-shadow: 0 0 18px var(--candle-glow); transition: transform .5s;
+  }
+  .shop:hover .door { transform: perspective(200px) rotateY(-55deg); }
+  .queue {
+    left: 29%; bottom: 16%; display: flex; gap: .2em; line-height: 1;
+    font-size: clamp(1.6rem, 4vw, 2.8rem); animation: shuffle 10s ease-in-out infinite;
+  }
+  .queue span { display: inline-block; animation: bob .9s ease-in-out infinite alternate; }
+  .queue span:nth-child(2) { animation-delay: -.3s; }
+  .queue span:nth-child(3) { animation-delay: -.6s; }
+  
+  /* 5. Person waving from a window */
+  .window {
+    left: 79%; top: 40%; width: clamp(44px, 7vw, 90px); height: clamp(36px, 5.5vw, 70px);
+    display: flex; align-items: center; justify-content: center; overflow: hidden; line-height: 1;
+    font-size: clamp(1.1rem, 3vw, 2.2rem); background: var(--candle-glow); border: 3px solid #000;
+  }
+  .wave { display: inline-block; transform-origin: 70% 80%; animation: wave .7s ease-in-out infinite alternate; }
+  
+  /* 6. Sky: bats above buildings, ghosts swooping between rooftops, fog, confetti */
+  .bat, .ghost, .car { left: 0; line-height: 1; }
+  .bat i, .car i { display: inline-block; font-style: normal; }
+  .bat { font-size: clamp(1.2rem, 3vw, 2rem); animation: ltr var(--d, 12s) linear var(--del, 0s) infinite; }
+  .bat i { animation: flap .3s ease-in-out infinite alternate; }
+  .bat-1 { top: 12%; --d: 11s; --rx: 20%; }
+  .bat-2 { top: 20%; --d: 15s; --del: -5s; --rx: 60%; }
+  .bat-3 { top: 6%;  --d: 9s;  --del: -2s; --rx: 75%; }
+  .art .rtl { animation-name: rtl; } /* drive/fly right to left */
+  .ghost { font-size: clamp(1.6rem, 4.5vw, 3rem); opacity: .85; animation: swoop var(--d, 16s) linear var(--del, 0s) infinite; }
+  .ghost-1 { top: 28%; --d: 16s; --rx: 35%; }
+  .ghost-2 { top: 34%; --d: 20s; --del: -9s; --rx: 70%; }
+  .fog {
+    left: 0; bottom: 10%; width: 200%; height: 22%; z-index: 2; pointer-events: none; animation: drift 26s linear infinite;
+    background: radial-gradient(ellipse at 25% 100%, rgba(246, 242, 248, .3), transparent 65%),
+                radial-gradient(ellipse at 75% 100%, rgba(246, 242, 248, .25), transparent 65%);
+  }
+  .confetti { /* purple and orange */
+    inset: 0; z-index: 2; pointer-events: none; opacity: .85;
     background-image: radial-gradient(circle, var(--pumpkin) 3px, transparent 4px),
                       radial-gradient(circle, #b56cff 3px, transparent 4px),
-                      radial-gradient(circle, var(--slime-green) 2px, transparent 3px);
+                      radial-gradient(circle, var(--pumpkin) 2px, transparent 3px);
     background-size: 90px 110px, 130px 110px, 170px 110px;
     background-position: 0 0, 40px 30px, 80px 60px;
     animation: fall 7s linear infinite;
-}
-
-/* Streetlights with flickering glows */
-.lamp {
-    position: absolute;
-    left: var(--x);
-    bottom: 20%;
-    z-index: 4;
-    width: 3px;
-    height: 30%;
-    background: #000;
-}
-.lamp::after {
-    content: "";
-    position: absolute;
-    top: -6px;
-    left: -7px;
-    width: 17px;
-    height: 10px;
-    border-radius: 50% 50% 0 0;
-    background: var(--candle-glow);
-    box-shadow: 0 0 18px 8px rgba(255, 214, 10, .5);
-    animation: lamp 4s infinite;
-}
-
-/* Road */
-.road {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 20%; /* Adjust height as needed */
-    z-index: 1; /* Ensure it appears below other elements */
-}
-
-.road-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the image scales properly */
-}
-
-/* Keyframes for animations */
-@keyframes ltr {
-    from { transform: translateX(-10%); }
-    to { transform: translateX(110%); }
-}
-@keyframes swoop {
-    0% { transform: translateY(-10%) translateX(0); }
-    50% { transform: translateY(10%) translateX(50%); }
-    100% { transform: translateY(-10%) translateX(100%); }
-}
-@keyframes fall {
-    0% { background-position: 0 0, 40px 30px, 80px 60px; }
-    100% { background-position: 0 100%, 40px 130%, 80px 160%; }
-}
-@keyframes lamp {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
+  }
+  
+  /* 7. Street: flickering lamps and cars */
+  .lamp { bottom: 20%; z-index: 4; width: 3px; height: 30%; background: #000; }
+  .lamp::after {
+    content: ""; position: absolute; top: -6px; left: -7px; width: 17px; height: 10px; border-radius: 50% 50% 0 0;
+    background: var(--candle-glow); box-shadow: 0 0 18px 8px rgba(255, 214, 10, .5); animation: lamp 4s infinite;
+  }
+  .lamp-1 { left: 10%; }
+  .lamp-2 { left: 36%; } .lamp-2::after { animation-delay: -1.3s; }
+  .lamp-3 { left: 90%; } .lamp-3::after { animation-delay: -2.6s; }
+  .car { font-size: clamp(2rem, 5vw, 3.5rem); animation: ltr var(--d, 7s) linear var(--del, 0s) infinite; }
+  .car-1 { bottom: 7%; --d: 7s; --rx: 30%; }
+  .car-1 i { transform: scaleX(-1); } /* emoji car faces left; flip it to drive right */
+  .car-2 { bottom: 0; --d: 9s; --del: -3s; --rx: 65%; }
+  
+  /* 8. Keyframes */
+  @keyframes ltr     { from { translate: -15vw 0; } to { translate: 110vw 0; } }
+  @keyframes rtl     { from { translate: 110vw 0; } to { translate: -15vw 0; } }
+  @keyframes swoop   { 0% { translate: -10vw 0; } 20% { translate: 20vw 10vh; } 40% { translate: 45vw -3vh; } 60% { translate: 65vw 12vh; } 80% { translate: 90vw -2vh; } 100% { translate: 112vw 6vh; } }
+  @keyframes drift   { to { transform: translateX(-50%); } }
+  @keyframes fall    { to { background-position: 0 110px, 40px 140px, 80px 170px; } }
+  @keyframes lamp    { 0%, 40%, 50%, 100% { opacity: 1; } 42% { opacity: .2; } 46% { opacity: .55; } 48% { opacity: .15; } }
+  @keyframes lit     { 0%, 100% { opacity: .5; } 30% { opacity: .2; } 35% { opacity: .5; } 70% { opacity: .3; } }
+  @keyframes flicker { 0%, 100% { opacity: 1; } 50% { opacity: .4; } 52% { opacity: 1; } }
+  @keyframes bob     { to { transform: translateY(-6px); } }
+  @keyframes shuffle { 0%, 35% { translate: 0 0; } 45%, 80% { translate: 1.5vw 0; } 100% { translate: 0 0; } }
+  @keyframes flap    { to { transform: scaleY(.5); } }
+  @keyframes wave    { to { transform: rotate(35deg); } }
+  
+  /* 9. Reduced motion: freeze the scene but keep everything visible */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .bat, .ghost, .car { left: var(--rx, 40%); }
+  }
